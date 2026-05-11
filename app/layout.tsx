@@ -2,11 +2,11 @@ import "@/styles/globals.css";
 import clsx from "clsx";
 import { Metadata, Viewport } from "next";
 
-import { fontSans } from "@/config/fonts";
+import { fontMono, fontSans } from "@/config/fonts";
 import { siteConfig } from "@/config/site";
+import { ConvexClientProvider } from "@/components/convex-client-provider";
 
 import { Providers } from "./providers";
-import Head from "next/head";
 
 export const metadata: Metadata = {
     description: siteConfig.description,
@@ -38,14 +38,17 @@ export default function RootLayout({
                 className={clsx(
                     "min-h-screen bg-background font-sans antialiased",
                     fontSans.variable,
+                    fontMono.variable,
                 )}
             >
                 <Providers
                     themeProps={{ attribute: "class", defaultTheme: "dark" }}
                 >
-                    <div className="flex flex-col">
-                        <main className="grow">{children}</main>
-                    </div>
+                    <ConvexClientProvider>
+                        <div className="flex flex-col">
+                            <main className="grow">{children}</main>
+                        </div>
+                    </ConvexClientProvider>
                 </Providers>
             </body>
         </html>
