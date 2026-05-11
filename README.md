@@ -83,7 +83,7 @@ export OTEL_EXPORTER_OTLP_LOGS_ENDPOINT=http://127.0.0.1:3210/v1/logs
 export OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=http://127.0.0.1:3210/v1/metrics
 
 # Bearer token — must match what you set via `npx convex env set OTEL_INGEST_TOKEN`
-export OTEL_EXPORTER_OTLP_HEADERS="Authorization=Bearer <OTEL_INGEST_TOKEN>"
+export OTEL_EXPORTER_OTLP_HEADERS="OTEL_INGEST_TOKEN=<OTEL_INGEST_TOKEN>"
 
 # Optional: include full user prompt text in the dashboard
 export OTEL_LOG_USER_PROMPTS=1
@@ -93,11 +93,11 @@ Then run `claude` as normal — events will appear in the dashboard.
 
 To make this persistent, add the exports to your shell profile (`~/.bashrc`, `~/.zshrc`, or a per-project `.envrc`). On Windows PowerShell use `$env:NAME = "value"`.
 
-If you already run an OTEL collector, forward logs/metrics to one of the Convex routes above with the same `Authorization` header.
+If you already run an OTEL collector, forward logs/metrics to one of the Convex routes above with the same `OTEL_INGEST_TOKEN` header.
 
 ## Notes
 
 - If `claude_code.api_request` events are present, token totals use them.
 - If API request events are missing, totals fall back to `claude_code.token.usage` metric events.
 - Prompt text only appears when `OTEL_LOG_USER_PROMPTS=1` is set.
-- Requests without a valid `Authorization: Bearer` header are rejected with 401.
+- Requests without a valid `OTEL_INGEST_TOKEN` header are rejected with 401.
